@@ -51,7 +51,6 @@ print()
 # отправляем 1-ый запрос с кредами (креды в теле запроса - form-data, метод POST) на сервис (для авторизации)
 payload = {'login':'secret_login','password':'secret_pass8'}
 response_cookies = requests.post('https://playground.learnqa.ru/api/get_auth_cookie', data=payload)
-
 # проверяем, что кука пришла
 if response_cookies.cookies.get('auth_cookie') is not None:
     response = requests.post('https://playground.learnqa.ru/api/check_auth_cookie', cookies=response_cookies.cookies) # 2-ой запрос. После авторизации проверяем, что cookie действительны и мы авторизованы
