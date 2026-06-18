@@ -1,7 +1,7 @@
 import requests
 import pytest
 
-class Authorization:
+class TestAuthorization:
     def test_user_authorization(self):
         data = {
             'email':'vinkotov@example.com',
@@ -15,14 +15,14 @@ class Authorization:
 
         cookies = response1.cookies.get('auth_sid') # присваиваем переменной значение пришедшей куки для удобства
         token = response1.headers.get('x-csrf-token') #аналогично
-        user_id_from_auth_method = response1.json().get['user_id'] # не используем при доставании поля .get(), потому что уже выше убедились, что поле присутствует и ошибки не будет
+        user_id_from_auth_method = response1.json()['user_id'] # не используем при доставании поля .get(), потому что уже выше убедились, что поле присутствует и ошибки не будет
 
-        response2 = requests.get('https://playground.learnqa.ru/api/user/{id}', headers={'x-csrf-token':token}, cookies={'auth_sid':cookies})
+        response2 = requests.get('https://playground.learnqa.ru/api/user/auth', headers={'x-csrf-token':token}, cookies={'auth_sid':cookies})
         assert 'user_id' in response2.json(), "Во втором ответе от сервера в json нет поля 'user_id'"
 
-        user_id_from_check_method = response2.json().get['user_id']
+        user_id_from_check_method = response2.json()['user_id']
 
-        assert user_id_from_auth_method == user_id_from_check_method, "'user_id' не совпадает, работает некорректно"
+        assert user_id_from_auth_method == user_id_from_check_method, "'user_id' не совпадает, работает некорректно" # сравниваем ответы по значению поля user_id с 1-го и 2-го запроса
 
 
 
