@@ -27,7 +27,7 @@ class TestAuthorization:
 
 
 
-
+    #Негативные тесты с использованием параметризации
     exclude_params=[
         ('no_cookies'),
         ('no_token')
